@@ -38,14 +38,6 @@ public class DisplayData {
         SmartDashboard.putNumber("Left Encoder Inches", leftEncDist);
         SmartDashboard.putNumber("Right Encoder Inches", rightEncDist);
         SmartDashboard.putNumber("Avg Encoder Inches", avgEncDist);
-        
-        SmartDashboard.putNumber("Inches to travel", travDistance);
-        
-//        if(pid != null) {
-//            if(pid.straightPID != null) {
-//                SmartDashboard.putData("PID Controller", pid.straightPID); //Used for PID Tuning
-//            }
-//        }
     }
     
     public void TeleopSmartDash()
@@ -59,8 +51,8 @@ public class DisplayData {
         travDistance = pref.getDouble("Distance", 0);
         travSpeed = pref.getDouble("Speed", 0);
         
-        rampTime = pref.getDouble("RampTime", 0);
-        rampSpeed = pref.getDouble("RampSpeed", 0);
+        //rampTime = pref.getDouble("RampTime", 0);
+        //rampSpeed = pref.getDouble("RampSpeed", 0);
         
         pref.save();
         //SmartDashboard > View > Add > Robot Preferences 

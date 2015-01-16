@@ -28,8 +28,6 @@ public class RobotTemplate extends IterativeRobot {
         pid    = new PID(drive, encode, gyro);
         data   = new DisplayData(drive, encode, gyro);  
         autonomous = new Auton(drive, encode, gyro, data, pid);
-
-        System.out.println("RobotInit is run");
     }
     
     public void autonomousInit(){ 

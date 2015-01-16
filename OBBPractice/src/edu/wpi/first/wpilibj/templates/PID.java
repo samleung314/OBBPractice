@@ -1,7 +1,6 @@
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,11 +38,10 @@ public class PID implements PIDOutput {
         this.pidOutput = output;
     }
         
-    public void displayPID()
+    public void displayPID() //Created to avoid cross referencing between DisplayData and PID
     {
-        //Created to avoid cross referencing between DisplayData and PID
          SmartDashboard.putData("StraightPID", straightPID);
-         SmartDashboard.putData("DistancePID", distancePID);
+         //SmartDashboard.putData("DistancePID", distancePID);
          SmartDashboard.putNumber("PID Output", pidOutput);
     }
     
