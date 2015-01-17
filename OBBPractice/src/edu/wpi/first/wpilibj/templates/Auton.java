@@ -11,7 +11,7 @@ public class Auton {
     Gyroscope gyro;
     PID pid;
 
-    boolean seg1, seg2, seg3, turn1, turn2;
+    boolean seg1, seg2, seg3, seg4, turn1, turn2, turn3, turn4;
 
     public Auton(Drive drive, Encoders encode, Gyroscope gyro, DisplayData data, PID pid) {
         this.data = data;
@@ -27,48 +27,59 @@ public class Auton {
         encode.resetEnc();
         encode.startEnc();
         gyro.resetGyro();
-        //pid.time.reset();
-        //pid.time.start();
-
-        //pid.straightPID.enable();
-        //pid.straightPID.setSetpoint(0);
-        //pid.distancePID.enable();
+        
+        pid.straightPID.setPID(0.36, 0, 0);
+        pid.straightPID.setSetpoint(0);
 
         seg1 = false;
         seg2 = false;
         seg3 = false;
+        seg4 = false;
 
         turn1 = false;
         turn2 = false;
+        turn3 = false;
     }
 
     public void AutonPeriodic() {
         data.AutoSmartDash();
-        //pid.displayPID();
+        pid.displayPID();
         zigZag(data.travSpeed);
 
         //pid.ramp(data.rampTime, data.rampSpeed);
     }
 
     public void zigZag(double speed) {
-        if (!seg1) {
-            seg1 = travelDistance(86, speed);
+        if (!seg1) { 
+            seg1 = travelDistance(85, speed);
         }
 
         if ((seg1) && (!turn1)) {
-            turn1 = turnDegrees(135, speed);
+            turn1 = turnDegrees(90, speed);
         }
         
         if ((turn1) && (!seg2)){
-            seg2 = travelDistance(121.6, speed);
+            seg2 = travelDistance(82, speed);
         }
         
         if ((seg2) && (!turn2)){
-            turn2 = turnDegrees(-135, speed);
+            turn2 = turnDegrees(90, speed);
         }
         
         if ((turn2) && (!seg3)){
-            seg3 = travelDistance(86, speed);
+            seg3 = travelDistance(85, speed);
+        }
+        
+        if ((seg3) && (!turn3)){
+            turn3 = turnDegrees(90, speed);
+        }
+        
+        if ((turn3) && (!seg4)){
+            seg4 = travelDistance(82, speed);
+        }
+        
+        if ((seg4) && (!turn4)){
+            turn4 = turnDegrees(90, speed);
         }
     }
 
@@ -76,11 +87,12 @@ public class Auton {
         //pid.distancePID.setSetpoint(distance);
 
         if (encode.avgEncDist() < distance) {
+            pid.straightPID.enable();
             drive.sudoVics(speed, -speed);
             return false;
 
         } else if (encode.avgEncDist() >= distance) {
-
+            pid.straightPID.disable();
             drive.sudoVics(0, 0);
             encode.resetEnc();
             return true;
@@ -90,8 +102,9 @@ public class Auton {
 
     public boolean turnDegrees(double degrees, double turnSpeed) {
 
+        turnSpeed = turnSpeed *.8;
         //double turnError = Math.abs(degrees - gyro.getAngle());
-        if (gyro.getAngle() < Math.abs(degrees) - 3 || gyro.getAngle() > Math.abs(degrees) + 3) {
+        if (gyro.getAngle() < degrees - 2 || gyro.getAngle() > degrees + 2) {
 
             if (degrees < 0) //Negative Degrees (CCW)
             {

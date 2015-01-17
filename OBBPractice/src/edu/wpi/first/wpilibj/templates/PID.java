@@ -20,6 +20,7 @@ public class PID implements PIDOutput {
     public double pidOutput;
     
     public PIDController straightPID;
+    public PIDController turnPID;
     public PIDController distancePID;
     
     public PID(Drive drive, final Encoders encode, Gyroscope gyro) {
@@ -41,8 +42,9 @@ public class PID implements PIDOutput {
     public void displayPID() //Created to avoid cross referencing between DisplayData and PID
     {
          SmartDashboard.putData("StraightPID", straightPID);
+         //SmartDashboard.putData("TurnPID", turnPID);
          //SmartDashboard.putData("DistancePID", distancePID);
-         SmartDashboard.putNumber("PID Output", pidOutput);
+         //SmartDashboard.putNumber("PID Output", pidOutput);
     }
     
     public void ramp(double seconds, double speed)
