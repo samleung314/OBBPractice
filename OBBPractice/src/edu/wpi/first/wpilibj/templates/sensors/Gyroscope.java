@@ -18,7 +18,7 @@ public class Gyroscope {
         return gyro.getAngle();
     }
     
-    public void resetGyroCount()
+    public void resetGyro()
     {
         gyro.reset();
     }
