@@ -2,6 +2,7 @@ package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.templates.Subsystems.*;
 import edu.wpi.first.wpilibj.templates.sensors.*;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Auton {
 
@@ -10,6 +11,7 @@ public class Auton {
     Encoders encode;
     Gyroscope gyro;
     PID pid;
+    Timer time = new Timer();
 
     boolean seg1, seg2, seg3, seg4, turn1, turn2, turn3, turn4;
 
@@ -28,8 +30,8 @@ public class Auton {
         encode.startEnc();
         gyro.resetGyro();
         
-        pid.straightPID.setPID(0.36, 0, 0);
         pid.straightPID.setSetpoint(0);
+        pid.turnPID.setContinuous();
 
         seg1 = false;
         seg2 = false;
@@ -39,19 +41,25 @@ public class Auton {
         turn1 = false;
         turn2 = false;
         turn3 = false;
+        turn4 = false;
     }
 
     public void AutonPeriodic() {
         data.AutoSmartDash();
         pid.displayPID();
-        zigZag(data.travSpeed);
+        //turnTest();
 
         //pid.ramp(data.rampTime, data.rampSpeed);
     }
+    
+    public void turnTest(){
+       PIDturnDegrees(data.turnDegree);
+       time.delay(0.010);
+    }
 
-    public void zigZag(double speed) {
+    public void squareSequence(double speed) {
         if (!seg1) { 
-            seg1 = travelDistance(85, speed);
+            seg1 = travelDistance(75/2, speed);
         }
 
         if ((seg1) && (!turn1)) {
@@ -59,7 +67,7 @@ public class Auton {
         }
         
         if ((turn1) && (!seg2)){
-            seg2 = travelDistance(82, speed);
+            seg2 = travelDistance(72/2, speed);
         }
         
         if ((seg2) && (!turn2)){
@@ -67,7 +75,7 @@ public class Auton {
         }
         
         if ((turn2) && (!seg3)){
-            seg3 = travelDistance(85, speed);
+            seg3 = travelDistance(75/2, speed);
         }
         
         if ((seg3) && (!turn3)){
@@ -75,7 +83,7 @@ public class Auton {
         }
         
         if ((turn3) && (!seg4)){
-            seg4 = travelDistance(82, speed);
+            seg4 = travelDistance(72/2, speed);
         }
         
         if ((seg4) && (!turn4)){
@@ -92,18 +100,24 @@ public class Auton {
             return false;
 
         } else if (encode.avgEncDist() >= distance) {
-            pid.straightPID.disable();
             drive.sudoVics(0, 0);
+            pid.straightPID.disable();
             encode.resetEnc();
             return true;
         }
         else return true;
     }
+    
+    public void PIDturnDegrees(double degrees) {
+            pid.turnPID.setSetpoint(degrees);
+            pid.turnPID.enable();
+            drive.sudoVics(pid.turnOutput, pid.turnOutput);
+            
+            
+    }
 
     public boolean turnDegrees(double degrees, double turnSpeed) {
 
-        turnSpeed = turnSpeed *.8;
-        //double turnError = Math.abs(degrees - gyro.getAngle());
         if (gyro.getAngle() < degrees - 2 || gyro.getAngle() > degrees + 2) {
 
             if (degrees < 0) //Negative Degrees (CCW)

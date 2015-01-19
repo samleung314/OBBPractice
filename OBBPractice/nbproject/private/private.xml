@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Robotics/Documents/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/Auton.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/PID.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/Auton.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/sensors/Gyroscope.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/DisplayData.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/Subsystems/Drive.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/sensors/Encoders.java</file>
+            <file>file:/C:/Users/NFTE/Desktop/GitRepos/OBBPractice/OBBPractice/src/edu/wpi/first/wpilibj/templates/RobotTemplate.java</file>
         </group>
     </open-files>
 </project-private>

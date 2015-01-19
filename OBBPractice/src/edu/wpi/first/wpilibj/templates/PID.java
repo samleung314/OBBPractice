@@ -14,10 +14,10 @@ public class PID implements PIDOutput {
     Gyroscope gyro;
     Timer time = new Timer(); 
     
-    public double pS, pD;
-    public double iS, iD; 
-    public double dS, dD;
-    public double pidOutput;
+    public double pS, pD, pT;
+    public double iS, iD, iT; 
+    public double dS, dD, dT;
+    public double turnOutput;
     
     public PIDController straightPID;
     public PIDController turnPID;
@@ -30,21 +30,23 @@ public class PID implements PIDOutput {
 
         straightPID = new PIDController(pS, iS, dS, gyro.gyro, drive.leftVics);
                 // pass `this` because we are the pid output
+        
+        turnPID = new PIDController(pT, iT, dT, gyro.gyro, this);
 
-        distancePID = new PIDController(pD, iD, dD, encode, this);
+        //distancePID = new PIDController(pD, iD, dD, encode, this);
         // PIDSource source = () -> encode.avgEncDist(); for Java 8
     }
     
     public void pidWrite(double output) {
-        this.pidOutput = output;
+        this.turnOutput = output;
     }
         
     public void displayPID() //Created to avoid cross referencing between DisplayData and PID
     {
          SmartDashboard.putData("StraightPID", straightPID);
-         //SmartDashboard.putData("TurnPID", turnPID);
+         SmartDashboard.putData("TurnPID", turnPID);
          //SmartDashboard.putData("DistancePID", distancePID);
-         //SmartDashboard.putNumber("PID Output", pidOutput);
+         SmartDashboard.putNumber("PID Turn Output", turnOutput);
     }
     
     public void ramp(double seconds, double speed)

@@ -15,7 +15,7 @@ public class DisplayData {
     //Ultrasonic ultraA, ultraB;
     
     private final Preferences pref = Preferences.getInstance();
-    public double rampSpeed, rampTime, travDistance, travSpeed;
+    public double rampSpeed, rampTime, travDistance, travSpeed, turnDegree;
     
     public DisplayData(Drive drive, Encoders encode, Gyroscope gyro) {
         this.drive = drive;
@@ -50,6 +50,8 @@ public class DisplayData {
     {
         travDistance = pref.getDouble("Distance", 0);
         travSpeed = pref.getDouble("Speed", 0);
+        
+        turnDegree = pref.getDouble("Degrees", 0);
         
         //rampTime = pref.getDouble("RampTime", 0);
         //rampSpeed = pref.getDouble("RampSpeed", 0);

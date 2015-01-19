@@ -28,6 +28,8 @@ public class RobotTemplate extends IterativeRobot {
         pid    = new PID(drive, encode, gyro);
         data   = new DisplayData(drive, encode, gyro);  
         autonomous = new Auton(drive, encode, gyro, data, pid);
+        
+        pid.displayPID();
     }
     
     public void autonomousInit(){ 
@@ -39,8 +41,8 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void teleopInit(){
+        pid.turnPID.disable();
         pid.straightPID.disable();
-        pid.distancePID.disable();
     }
     
     public void teleopPeriodic() {
@@ -50,8 +52,8 @@ public class RobotTemplate extends IterativeRobot {
     
     public void disabledInit()
     {
+        pid.turnPID.disable();
         pid.straightPID.disable();
-        pid.distancePID.disable();
     }
     
     public void testPeriodic() {
