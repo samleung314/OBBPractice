@@ -47,7 +47,6 @@ public class RobotTemplate extends IterativeRobot {
     
     public void teleopPeriodic() {
         control.joystickDrive();
-        data.TeleopSmartDash();
     }
     
     public void disabledInit()
